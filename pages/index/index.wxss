@@ -1,0 +1,25 @@
+/**index.wxss**/
+.mapStyle {
+ width: 100vh;
+ height: 100vh;
+ position: relative;
+}
+
+.operating {
+  position: absolute;
+  z-index: 999;
+  top: 60vh;
+  right: 3vh;
+  max-width: 60px;
+  height: 30px;
+}
+.operatingBtn{
+}
+.btnText{
+  margin-top: 0px;
+  font-size: 9px;
+}
+.operatingImg{
+ width: 30px;
+ height: 30px;
+}

@@ -1,0 +1,17 @@
+<!--pages/report.wxml-->
+<view style="padding:10px">
+	<view>
+		<view>
+			<button type="primary" bindtap="onChangeAddress">选择位置</button>
+		</view>
+		<view class="inputview-style">
+			<input type="text"  placeholder="地址 选择位置后自动输入 当然你也可以编辑"/>
+		</view>
+		<view class="inputview-style">
+			<input type="text" placeholder="输入当前位置发生了啥"/>
+		</view>
+	</view>
+	<view class="upview">
+			<button type="primary" >上报</button>
+		</view>
+</view>

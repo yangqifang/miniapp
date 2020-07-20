@@ -1,0 +1,11 @@
+<!--index.wxml-->
+<view>
+	<map id="map" class="mapStyle" latitude="{{position.latitude}}" longitude="{{position.longitude}}" show-location="true" show-compass="true" enable-satellite="{{satellite}}" enable-traffic="{{traffic}}"></map>
+  <!-- 操作按钮 -->
+	<view class="operating">
+		<button  size="mini" class="operatingBtn" bindtap="report">
+			<image class="operatingImg" src="../../img/上传.png"></image>
+			<text class="btnText">上报路况</text>
+		</button>
+	</view>
+</view>
