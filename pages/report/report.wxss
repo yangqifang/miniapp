@@ -16,3 +16,12 @@
 .upview{
   margin-top: 60px;
 }
+
+.img-box{
+  width: 96%;
+  margin:auto;
+  padding-top: 20rpx;
+}
+.img-item{
+  
+}

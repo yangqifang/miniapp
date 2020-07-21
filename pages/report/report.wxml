@@ -5,13 +5,17 @@
 			<button type="primary" bindtap="onChangeAddress">选择位置</button>
 		</view>
 		<view class="inputview-style">
-			<input type="text"  placeholder="地址 选择位置后自动输入 当然你也可以编辑"/>
+			<input type="text" placeholder="地址 选择位置后自动输入 当然你也可以编辑" model:value="{{address}}" />
 		</view>
 		<view class="inputview-style">
-			<input type="text" placeholder="输入当前位置发生了啥"/>
+			<input type="text" placeholder="输入当前位置发生了啥" model:value="{{description}}" />
+		</view>
+		<view class="img-box">
+			<view class='img-item'>
+			</view>
 		</view>
 	</view>
 	<view class="upview">
-			<button type="primary" >上报</button>
-		</view>
+		<button type="primary" bindtap="onUpload">上报</button>
+	</view>
 </view>
