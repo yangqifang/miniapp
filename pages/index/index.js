@@ -16,7 +16,7 @@ Page({
   onLoad: function () {
     let self=this
     wx.getLocation({
-      type: 'wgs84',
+      type: 'gcj02',
       altitude: true,
       isHighAccuracy:true,
       success (res){
