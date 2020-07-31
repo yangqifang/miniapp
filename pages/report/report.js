@@ -5,10 +5,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-    longitude:0.00,//经度
-    latitude:0.00,//维度
-    address:'',//地址
-    description:''//描述
+    longitude: 0.00, //经度
+    latitude: 0.00, //维度
+    address: '', //地址
+    description: '', //描述
+    imageurl: '' //上报的图片地址
   },
 
   options: {
@@ -74,15 +75,15 @@ Page({
   /**
    * 选择位置
    */
-  onChangeAddress:function(){
-    let that=this
+  onChangeAddress: function () {
+    let that = this
     wx.chooseLocation({
-      success:function(res){
+      success: function (res) {
         console.log(res)
         that.setData({
-          address:res.address,
-          longitude:res.longitude,
-          latitude:res.latitude
+          address: res.address,
+          longitude: res.longitude,
+          latitude: res.latitude
         })
       }
     })
@@ -90,31 +91,47 @@ Page({
   /**
    * 用户点击上报
    */
-  onUpload:function(){
-    if(!this.data.address||!this.data.latitude||!this.data.longitude){
+  onUpload: function () {
+    if (!this.data.address || !this.data.latitude || !this.data.longitude) {
       wx.showToast({
         title: '请选择或者输入位置信息',
-        icon:'none'
+        icon: 'none'
       })
       return;
     }
-    if(!this.data.description){
+    if (!this.data.description) {
       wx.showToast({
         title: '请说明当前位置发生了什么',
-        icon:'none'
+        icon: 'none'
       })
       return;
     }
 
     wx.showToast({
       title: '上报成功！感谢你的上报',
-      duration:5000,
-      success:function(){
+      duration: 5000,
+      success: function () {
         wx.navigateBack({
           delta: 1
         })
       }
     })
-    
+
+  },
+  /**
+   * 选择图片
+   */
+  uploadDetailImage: function () {
+    let that = this
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['original', 'compressed'], // original 原图，compressed 压缩图，默认二者都有
+      sourceType: ['album', 'camera'], // album 从相册选图，camera 使用相机，默认二者都有
+      success: function (resul) {
+        that.setData({
+          imageurl: resul.tempFilePaths[0]
+        })
+      }
+    })
   }
 })

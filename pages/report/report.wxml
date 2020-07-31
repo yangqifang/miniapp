@@ -12,6 +12,10 @@
 		</view>
 		<view class="img-box">
 			<view class='img-item'>
+				<view class='chooseimg' bindtap='uploadDetailImage'>
+					<image wx:if="{{imageurl==''}}" src="../../img/上传图片.png" class="weui-uploader__input-box"></image>
+					<image wx:if="{{imageurl!=''}}" src="{{imageurl}}" class="weui-uploader__input-box"></image>
+				</view>
 			</view>
 		</view>
 	</view>

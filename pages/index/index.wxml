@@ -1,11 +1,31 @@
 <!--index.wxml-->
 <view>
-	<map id="map" class="mapStyle" latitude="{{position.latitude}}" longitude="{{position.longitude}}" show-location="true" show-compass="true" enable-satellite="{{satellite}}" enable-traffic="{{traffic}}"></map>
-  <!-- 操作按钮 -->
-	<view class="operating">
-		<button  size="mini" class="operatingBtn" bindtap="report">
-			<image class="operatingImg" src="../../img/上传.png"></image>
-			<text class="btnText">上报路况</text>
-		</button>
-	</view>
+	<map id="map" class="mapStyle" latitude="{{position.latitude}}" longitude="{{position.longitude}}" show-location="true" show-compass="true" enable-satellite="{{satellite}}" enable-traffic="{{traffic}}" markers="{{markers}}" bindmarkertap="markertap" bindtap="mapTap">
+		<view>
+			<view class="coverModel" wx:if="{{showMarkerModel}}">
+				<view class="address">
+					<image src="../../img/地址.png" />
+					湖南省长沙市岳麓区含光路658号(岳麓区政府正门对面)
+				</view>
+				<view class="address">
+					<image src="../../img/提醒.png" />
+					查酒驾 抓摩托
+				</view>
+			</view>
+			<!-- 操作按钮 -->
+			<view class="operating">
+				<button size="mini" class="operatingBtn" bindtap="report">
+					<image class="operatingImg" src="../../img/上传.png"></image>
+					<text class="btnText">上报路况</text>
+				</button>
+			</view>
+			<view class="login_panl" wx:if="{{!isClosePanl}}">
+					<view style="margin-top: 15px;" class="login_text">需要登陆之后才能使用</view>
+					<view style="margin-top: 30px;">
+						<button  type="primary" open-type="getUserInfo" bindgetuserinfo="getuserinfo">授权登陆</button>
+					</view>
+			</view>
+		</view>
+	</map>
+
 </view>

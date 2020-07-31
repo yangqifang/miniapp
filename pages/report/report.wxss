@@ -15,13 +15,29 @@
 
 .upview{
   margin-top: 60px;
+  width: 100%;
+  position: fixed;
+  bottom: 10vh;
 }
 
 .img-box{
   width: 96%;
   margin:auto;
-  padding-top: 20rpx;
+  padding-top: 60rpx;
 }
 .img-item{
-  
+
+}
+.chooseimg {
+  background-color: #fff;
+}
+
+.weui-uploader__input-box {
+  float: left;
+  position: relative;
+  margin-right: 9px;
+  margin-bottom: 9px;
+  width: 100%;
+  height: 30vh;
+  border: 1px solid #d9d9d9;
 }
