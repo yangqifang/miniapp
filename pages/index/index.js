@@ -22,6 +22,7 @@ Page({
       }
     ],
     showMarkerModel:false,
+    markerData:{},
     isClosePanl:false,//是否关闭登陆面板
   },
   onLoad: function () {
@@ -40,15 +41,41 @@ Page({
         })
       }
     })
-    if(app.globalData.userInfo){
-      this.setData({
-        isClosePanl:true
-      })
-    }else{
-      this.setData({
-        isClosePanl:false
-      })
-    }
+    wx.getStorage({
+      key: 'userInfo',
+      success:function(res){
+        console.log(res.data)
+        if(res.data){
+          self.setData({
+            isClosePanl:true
+          })
+        }else{
+          self.setData({
+            isClosePanl:false
+          })
+        }
+      }
+    })
+  },
+  onShow:function(){
+    var that=this
+    wx.getStorage({
+      key: 'userInfo',
+      success:function(info){
+        console.log(info.data)
+        app.globalData.userInfo=info.data
+        that.roadInfo(info.data.openId)
+      },
+      fail:function(){
+        wx.showToast({
+          title: '请登陆',
+          icon:'none'
+        })
+        that.setData({
+          isClosePanl:false
+        })
+      }
+    })
   },
   onReady: function () {
     this.mapCtx = wx.createMapContext('map', this)
@@ -61,9 +88,16 @@ Page({
   },
   markertap:function(e){
     console.log(e)
-    this.setData({
-      showMarkerModel:true
-    })
+    for(let index in this.data.markers){
+      if(index==e.markerId){
+        var item=this.data.markers[index]
+        this.setData({
+          showMarkerModel:true,
+          markerData:item['aria-label']
+        })
+      }
+    }
+    
   },
   mapTap:function(){
     this.setData({
@@ -73,7 +107,6 @@ Page({
   getuserinfo:function(res){
     let that=this
     let userInfo=res.detail.userInfo
-    console.log(userInfo)
     wx.login({
       success:function(resul){
         wx.request({
@@ -94,12 +127,12 @@ Page({
                 success:function(resul){
                   let data=resul.data.data
                   if(data){
-                    console.log('用户存在')
+                    console.log('用户存在',data)
                     app.globalData.userInfo=data
-                    console.log(app.globalData.userInfo)
                     that.setData({
                       isClosePanl:true
                     })
+                    that.setCath('userInfo',data)
                     wx.showToast({
                       title: '登陆成功！',
                     })
@@ -131,6 +164,33 @@ Page({
             }
           }
         })
+      }
+    })
+  },
+  setCath:function(key,value){
+    wx.setStorage({
+      data: value,
+      key: key,
+    })
+  },
+  roadInfo:function(openid){
+    var that=this;
+    wx.request({
+      url: app.globalData.server_url+'/jeecg-boot/mini/roadInfo',
+      data:{
+        'openId':openid
+      },
+      success:function(resul){
+          let {data}=resul
+          let podata=data.data;
+          var markers=[]
+          for(let index in podata){
+            let item=podata[index]
+            markers.push({'id':index,'latitude':item.latitude,'longitude':item.longitude,'aria-label':item})
+          }
+          that.setData({
+            markers:markers
+          })
       }
     })
   }

@@ -5,11 +5,14 @@
 			<view class="coverModel" wx:if="{{showMarkerModel}}">
 				<view class="address">
 					<image src="../../img/地址.png" />
-					湖南省长沙市岳麓区含光路658号(岳麓区政府正门对面)
+					{{markerData.address}}
 				</view>
 				<view class="address">
 					<image src="../../img/提醒.png" />
-					查酒驾 抓摩托
+					{{markerData.happen}}
+				</view>
+				<view>
+					<image class="uploadimg" wx:if="{{markerData.images}}" src="{{markerData.images}}"></image>
 				</view>
 			</view>
 			<!-- 操作按钮 -->
@@ -20,10 +23,10 @@
 				</button>
 			</view>
 			<view class="login_panl" wx:if="{{!isClosePanl}}">
-					<view style="margin-top: 15px;" class="login_text">需要登陆之后才能使用</view>
-					<view style="margin-top: 30px;">
-						<button  type="primary" open-type="getUserInfo" bindgetuserinfo="getuserinfo">授权登陆</button>
-					</view>
+				<view style="margin-top: 15px;" class="login_text">需要登陆之后才能使用</view>
+				<view style="margin-top: 30px;">
+					<button type="primary" open-type="getUserInfo" bindgetuserinfo="getuserinfo">授权登陆</button>
+				</view>
 			</view>
 		</view>
 	</map>

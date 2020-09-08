@@ -4,6 +4,6 @@ App({
   },
   globalData: {
     userInfo: null,
-    server_url:'http://47.101.32.241:8080'
+    server_url:'https://csc-traffic.city'
   }
 })

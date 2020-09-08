@@ -1,6 +1,7 @@
 // pages/report.js
-Page({
 
+const app = getApp()
+Page({
   /**
    * 页面的初始数据
    */
@@ -9,7 +10,8 @@ Page({
     latitude: 0.00, //维度
     address: '', //地址
     description: '', //描述
-    imageurl: '' //上报的图片地址
+    imageurl: '',//显示地址
+    url:'',//用来上传的地址
   },
 
   options: {
@@ -21,6 +23,18 @@ Page({
   onLoad: function (options) {
     wx.setNavigationBarTitle({
       title: '上报路况',
+    })
+    wx.getStorage({
+      key: 'userInfo',
+      success:function(info){
+        console.log(info.data)
+        app.globalData.userInfo=info.data
+      },
+      fail:function(){
+        wx.navigateBack({
+          delta: 1
+        })
+      }
     })
   },
 
@@ -106,17 +120,30 @@ Page({
       })
       return;
     }
-
-    wx.showToast({
-      title: '上报成功！感谢你的上报',
-      duration: 5000,
-      success: function () {
-        wx.navigateBack({
-          delta: 1
+    var that=this
+    wx.request({
+      url: app.globalData.server_url+'/jeecg-boot/mini/upload/roadInfo',
+      data:{
+        'latitude':that.data.latitude,
+        'longitude':that.data.longitude,
+        'address':that.data.address,
+        'images':that.data.url,
+        'happen':that.data.description,
+        'openId':app.globalData.userInfo.openId
+      },
+      method:'POST',
+      success:function(reusl){
+        wx.showToast({
+          title: '上报成功！感谢你的上报',
+          duration: 5000,
+          success: function () {
+            wx.navigateBack({
+              delta: 1
+            })
+          }
         })
       }
     })
-
   },
   /**
    * 选择图片
@@ -128,8 +155,23 @@ Page({
       sizeType: ['original', 'compressed'], // original 原图，compressed 压缩图，默认二者都有
       sourceType: ['album', 'camera'], // album 从相册选图，camera 使用相机，默认二者都有
       success: function (resul) {
-        that.setData({
-          imageurl: resul.tempFilePaths[0]
+        wx.uploadFile({
+          filePath: resul.tempFilePaths[0],
+          name: 'file',
+          sizeType:['original'],
+          sourceType: ['album', 'camera'],
+          header:{
+          },
+          url: app.globalData.server_url+'/jeecg-boot/mini/image/upload',
+          success:function(resJson){
+            var jsondata=JSON.parse(resJson.data)
+            var code=jsondata.code
+            var url=jsondata.data.url
+            that.setData({
+              imageurl: resul.tempFilePaths[0],
+              url:url
+            })
+          }
         })
       }
     })
